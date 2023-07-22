@@ -2,10 +2,7 @@ package org.flights;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.Producer;
-import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.opensky.model.StateVector;
 
@@ -15,12 +12,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.Properties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RecordsProducer {
 
     KafkaProducer<String, String> producer;
     Collection<StateVector> states;
     String topic;
+    private static final Logger log = LoggerFactory.getLogger(RecordsProducer.class);
     public RecordsProducer(Collection<StateVector> states, Config config) throws IOException {
         Properties props = loadProperties();
         this.topic = config.getTopic();
@@ -29,13 +29,21 @@ public class RecordsProducer {
 
     }
 
-    public void run() throws JsonProcessingException {
-        for(StateVector state : states){
+    public void run() throws JsonProcessingException{
+        log.info("Received " + this.states.size() + " states, will start producing to the "+ this.topic+" topic \n");
+        for(StateVector state : this.states){
             // The key is the ICAO24, so all messages with the same key are sent to the same partition, we can read the states of the same key in order
             String key = state.getIcao24();
             String value = (new ObjectMapper()).writeValueAsString( state);
-            producer.send(new ProducerRecord<String, String>(this.topic, key, value));
+            ProducerRecord<String, String> record = new ProducerRecord<>(this.topic, key, value);
+            producer.send(
+                    record,
+                    (recordMetadata, e) -> {
+                        // executes every time a record is successfully sent or an exception is thrown
+                        onCompletion(record, recordMetadata, e);
+                    });
         }
+        producer.flush();
         producer.close();
     }
 
@@ -45,12 +53,26 @@ public class RecordsProducer {
      * @throws IOException
      */
     static Properties loadProperties() throws IOException {
-        File propsFile = new File("cluster.properties");
+        File propsFile = new File("C:\\Users\\souam\\Documents\\Data Engineering\\FlightAnalyticsAWS\\config\\cluster.properties");
         final Properties props = new Properties();
         InputStream inputStream = new FileInputStream(propsFile);
         props.load(inputStream);
         props.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         return props;
+    }
+
+    static void onCompletion(ProducerRecord record, RecordMetadata recordMetadata, Exception e){
+        if (e == null) {
+            // the record was successfully sent
+            log.info("Received new metadata. \n" +
+                    "Topic:" + recordMetadata.topic() + "\n" +
+                    "Key:" + record.key() + "\n" +
+                    "Partition: " + recordMetadata.partition() + "\n" +
+                    "Offset: " + recordMetadata.offset() + "\n" +
+                    "Timestamp: " + recordMetadata.timestamp());
+        } else {
+            log.error("Error while producing", e);
+        }
     }
 }

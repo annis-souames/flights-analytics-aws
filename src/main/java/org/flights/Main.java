@@ -13,8 +13,9 @@ public class Main {
         Config config = loadConfig(configPath);
 
         OpenSkyClient client = new OpenSkyClient(config);
-        System.out.println(OpenSkyClient.serializeStates(client.getStates()));
+        //System.out.println(OpenSkyClient.serializeStates(client.getStates()));
         RecordsProducer producer = new RecordsProducer(client.getStates(), config);
+        producer.run();
     }
 
     public static Config loadConfig(String configPath) throws IOException {

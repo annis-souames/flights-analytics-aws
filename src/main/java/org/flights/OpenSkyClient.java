@@ -26,7 +26,7 @@ public class OpenSkyClient {
 
     public Collection<StateVector> getStates() throws IOException {
 
-        OpenSkyStates os = api.getStates(
+        OpenSkyStates os = this.api.getStates(
                 0,
                 null,
                 this.config.getBoundingBox()
