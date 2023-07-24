@@ -1,7 +1,7 @@
 {
   "username": "annis99",
   "password": "13aout99",
-  "pollingInterval": 10000,
+  "pollingInterval": 20,
   "boundingBox" : [45.8389, 47.8229, 5.9962, 10.5226],
   "topic" : "flights"
 }
