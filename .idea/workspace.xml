@@ -6,11 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="deacff8c-1f35-4e3d-bbce-9dace8165b4e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/cluster.properties" beforeDir="false" afterPath="$PROJECT_DIR$/config/cluster.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/cluster.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/cluster.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/flights/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/flights/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/flights/OpenSkyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/flights/OpenSkyClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/flights/RecordsProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/flights/RecordsProducer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,13 +31,6 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="MavenImportPreferences">
-    <option name="importingSettings">
-      <MavenImportingSettings>
-        <option name="workspaceImportEnabled" value="true" />
-      </MavenImportingSettings>
-    </option>
-  </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
   </component>
@@ -54,7 +45,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "//wsl$/Ubuntu-20.04/home/annis/projects/FlightAnalyticsAWS"
+    "last_opened_file_path": "/home/annis/Documents/projects/flights-analytics-aws"
   }
 }]]></component>
   <component name="RecentsManager">
