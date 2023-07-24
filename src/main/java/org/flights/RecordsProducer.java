@@ -53,10 +53,10 @@ public class RecordsProducer {
      * @throws IOException
      */
     static Properties loadProperties() throws IOException {
-        File propsFile = new File("C:\\Users\\souam\\Documents\\Data Engineering\\FlightAnalyticsAWS\\config\\cluster.properties");
-        final Properties props = new Properties();
-        InputStream inputStream = new FileInputStream(propsFile);
-        props.load(inputStream);
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        InputStream propsInputStream = classloader.getResourceAsStream("cluster.properties");
+        Properties props = new Properties();
+        props.load(propsInputStream);
         props.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         props.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         return props;
