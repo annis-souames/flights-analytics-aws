@@ -20,7 +20,7 @@ public class Main {
                 config.getPollingInterval()* 1000L
         );
     }
-
+    
     public static Config loadConfig(String configPath) throws IOException {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         InputStream configInputStream = classloader.getResourceAsStream(configPath);
